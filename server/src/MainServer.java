@@ -1,5 +1,10 @@
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * author: guoning
@@ -9,8 +14,18 @@ import io.netty.channel.nio.NioEventLoopGroup;
  */
 public class MainServer {
 
+    //http://www.importnew.com/25046.html
     public static void main(String[] args){
         EventLoopGroup boss = new NioEventLoopGroup();
         EventLoopGroup group = new NioEventLoopGroup();
+        Bootstrap b = new Bootstrap();
+        b.group(boss)
+                .option(ChannelOption.TCP_NODELAY,true)
+                .channel(NioSocketChannel.class)
+                .handler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel socketChannel) throws Exception {
+                    }
+                });
     }
 }
